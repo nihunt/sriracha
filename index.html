@@ -1,7 +1,28 @@
+<!DOCTYPE html>
 <html>
-<head>
-<title>Siriracha Game</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-</head>
-
+  <head>
+    <title>HTML5 input </title>
+    <script>
+ 
+    function init() {
+      var touchzone = document.getElementById("mycanvas");
+      touchzone.addEventListener("touchstart", draw, false);
+    }
+ 
+    function draw() {
+      var canvas = document.getElementById('mycanvas');
+ 
+      if(canvas.getContext) {
+        var ctx = canvas.getContext("2d");
+        ctx.fillRect (event.touches[0].pageX, event.touches[0].pageY, 5, 5);
+      }
+    }
+    </script>
+ 
+  </head>
+  <body onload="init()">
+    <canvas id="mycanvas" width="500" height="500">
+      Canvas element not supported.
+    </canvas>
+  </body>
 </html>
