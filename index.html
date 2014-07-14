@@ -1,28 +1,43 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
   <head>
-    <title>HTML5 input </title>
-    <script>
- 
-    function init() {
-      var touchzone = document.getElementById("mycanvas");
-      touchzone.addEventListener("touchstart", draw, false);
-    }
- 
-    function draw() {
-      var canvas = document.getElementById('mycanvas');
- 
-      if(canvas.getContext) {
-        var ctx = canvas.getContext("2d");
-        ctx.fillRect (event.touches[0].pageX, event.touches[0].pageY, 5, 5);
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
       }
-    }
-    </script>
- 
+      #myCanvas {
+        /*border-left: 10px solid #900;*/
+        border: 10px solid #900; 
+      }
+    </style>
   </head>
-  <body onload="init()">
-    <canvas id="mycanvas" width="500" height="500">
-      Canvas element not supported.
-    </canvas>
+  <body>
+  <h1>Mouse over section below to get coordinates</h1>
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <script>
+      function writeMessage(canvas, message) {
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.font = '18pt Calibri';
+        context.fillStyle = 'black';
+        context.fillText(message, 10, 25);
+      }
+      function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+
+      canvas.addEventListener('mousemove', function(evt) {
+        var mousePos = getMousePos(canvas, evt);
+        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+        writeMessage(canvas, message);
+      }, false);
+    </script>
   </body>
 </html>
