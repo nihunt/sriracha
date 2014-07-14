@@ -1,52 +1,49 @@
 <!DOCTYPE HTML>
-<html>
-  <head>
-  <script type="text/javascript">
-    src="https://raw.githubusercontent.com/nihunt/sriracha/master/falling.js"
-  </script>
-    <style>
-      body {
-        margin: 0px;
-        padding: 0px;
-      }
-      #myCanvas {
-        /*border-left: 10px solid #900;*/
-        border: 10px solid #900; 
-      }
-    </style>
-  </head>
-  <body>
-  <h1>Mouse over section below to get coordinates</h1>
-    <canvas id="myCanvas" width="600" height="600"></canvas>
-    <script>
-      function writeMessage(canvas, message) {
-        var context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.font = '18pt Calibri';
-        context.fillStyle = 'black';
-        context.fillText(message, 10, 25);
-      }
-      function getMousePos(canvas, evt) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-          x: evt.clientX - rect.left,
-          y: evt.clientY - rect.top
-        };
-      }
-      var canvas = document.getElementById('myCanvas');
-      var context = canvas.getContext('2d');
-
-      canvas.addEventListener('mousemove', function(evt) {
-        var mousePos = getMousePos(canvas, evt);
-        var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
-        writeMessage(canvas, message);
-      }, false);
-    </script>
- 
-  <body onload="init()">
-    <canvas id="mycanvas" width="500" height="500">
-      Canvas element not supported.
+<html lang="en-US">
+<head>
+  <title>Jump</title>
+  <style src="" />
+  <script src="" />
+</head>
+<body>
+  <div class="container">
+    <canvas id="canvas">
+      Aww, your browser doesn't support HTML5!
     </canvas>
-    <h1>Hi this is from Jane!</h1>
-  </body>
-</html>
+
+    <div id="mainMenu">
+      <h1>doodle jump</h1>
+      <h3>using HTML5,</h3>
+      <h3>...by <a href="http://twitter.com/solitarydesigns/" target="_blank">Kushagra Agarwal</a></h3>
+      <h3>and <a href="http://cssdeck.com" target="_blank">CSSDeck</a></h3>
+
+      <p class="info">
+        use
+        <span class="key left">←</span>
+        <span class="key right">→</span>
+        to move and space to (re) start...
+      </p>
+      <a class="button" href="javascript:init()">Play</a>
+    </div>
+    
+    <div id="gameOverMenu">
+      <h1>game over!</h1>
+      <h3 id="go_score">you scored 0 points</h3>
+
+      <a class="button" href="javascript:reset()">Restart</a>
+      <a id="tweetBtn" target="_blank" class="button tweet" href="#">Tweet score</a>
+
+      <a id="fbBtn" target="_blank" class="button fb" href="#">Post on FB</a>
+    </div>
+    
+    
+    <!-- Preloading image ;) -->
+    <img id="sprite" src="http://i.imgur.com/2WEhF.png"/>
+
+    <div id="scoreBoard">
+      <p id="score">0</p>
+    </div>
+
+  </div>
+</body>
+</html> 
