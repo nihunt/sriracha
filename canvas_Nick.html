@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      #myCanvas {
+        background-color: #F5F5F5;
+      }
+    </style>
+  </head>
+  <body onresize="toFullscreen()">
+    <canvas id="myCanvas" width="600" height="800"></canvas>
+    <script>
+      window.requestAnimFrame = (function(callback) {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+        function(callback) {
+          window.setTimeout(callback, 1000 / 60);
+        };
+      })();
+
+      function drawRect(myRectangle, context) {
+        context.beginPath();
+        context.rect(myRectangle.x, myRectangle.y, myRectangle.width, myRectangle.height);
+        context.fillStyle = '#556B2F';
+        context.fill();
+        context.lineWidth = myRectangle.borderWidth;
+        context.strokeStyle = 'black';
+        context.stroke();
+      }
+      function animate(lastTime, myRectangle, runAnimation, canvas, context) {
+        if(runAnimation.value) {
+          // update
+          var time = (new Date()).getTime();
+          var timeDiff = time - lastTime;
+
+          // pixels / second
+          var linearSpeed = 100;
+          var linearDistEachFrame = linearSpeed * timeDiff / 1000;
+          var currentY = myRectangle.y;
+
+          if(currentY < canvas.height - myRectangle.height - myRectangle.borderWidth / 2) {
+            var newY = currentY + linearDistEachFrame;
+            myRectangle.y = newY
+          }
+
+          // clear
+          context.clearRect(0, 0, canvas.width, canvas.height);
+
+          // draw
+          drawRect(myRectangle, context);
+
+          // request new frame
+          requestAnimFrame(function() {
+            animate(time, myRectangle, runAnimation, canvas, context);
+          });
+        }
+      }
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+
+      var myRectangle = {
+        x: 0,
+        y: 65,
+        width: 50,
+        height: 50,
+        borderWidth: 5
+      };
+
+      /*
+       * define the runAnimation boolean as an obect
+       * so that it can be modified by reference
+       */
+      var runAnimation = {
+        value: false
+      };
+
+      // add click listener to canvas
+      document.getElementById('myCanvas').addEventListener('click', function() {
+        // flip flag
+        runAnimation.value = !runAnimation.value;
+
+        if(runAnimation.value) {
+          var date = new Date();
+          var time = date.getTime();
+          animate(time, myRectangle, runAnimation, canvas, context);
+        }
+      });
+      drawRect(myRectangle, context);
+
+      window.onload=function() {
+        toFullscreen();
+      }
+
+      function toFullscreen() {
+        canvas = document.getElementById("myCanvas");
+        canvas.width = document.body.clientWidth;
+        canvas.height = document.body.clientHeight;
+        canvasW = canvas.width;
+        canvasH = canvas.height;
+      }
+
+      function initRectangles() {
+        var rectangles = [];
+
+        var red = '#FF0000';
+        var green = '#00FF00';
+
+        rectangles.push(new Rectangle(10, red));
+        rectangles.push(new Rectangle(10, green));
+        rectangles.push(new Rectangle(10, red));
+        rectangles.push(new Rectangle(10, green));
+        rectangles.push(new Rectangle(10, red));
+        rectangles.push(new Rectangle(10, red));
+
+        return rectangles;
+      }
+
+      function Rectangle(location, color) {
+        this.location = 0;
+        this.color = red;
+      }
+
+    </script>
+  </body>
+</html>      
